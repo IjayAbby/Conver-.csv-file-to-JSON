@@ -1,19 +1,3 @@
-// // require csvtojson module
-// const CSVToJSON = require('csvtojson')
-
-// // convert users.csv file to JSON array
-// CSVToJSON()
-//   .fromFile('customers.csv')
-//   .then(customers => {
-//     // users is a JSON array
-//     // log the JSON array
-//     console.log(customers)
-//   })
-//   .catch(err => {
-//     // log error if any
-//     console.log(err)
-// })
-
 const fs = require('fs');
 const csvtojson = require('csvtojson');
 
