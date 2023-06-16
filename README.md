@@ -24,6 +24,7 @@ Site ID: integer
   - `` npm install`` to get a copy of the packages in your local environment
 
 ### Run Code
+- Using sample input in the ```customers.csv file```
 - Open your terminal and type ```node app.js```. 
 - Sample output:
 ```
@@ -83,6 +84,7 @@ Finally, if you've read this far, don't forget to give this repo a ⭐️. They'
 
 ## Acknowledgments
 
+- [Blog Post](https://attacomsian.com/blog/nodejs-convert-csv-to-json)
 - [Jest](https://jestjs.io/) for unit testing.
 - [Csvtojson](https://www.npmjs.com/package/csvtojson) module.
 
