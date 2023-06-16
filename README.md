@@ -87,6 +87,7 @@ Finally, if you've read this far, don't forget to give this repo a ⭐️. They'
 - [Blog Post](https://attacomsian.com/blog/nodejs-convert-csv-to-json)
 - [Jest](https://jestjs.io/) for unit testing.
 - [Csvtojson](https://www.npmjs.com/package/csvtojson) module.
+- [Test Csv files](https://www.convertcsv.com/csv-to-json.htm)
 
 ## 📝 License
 
