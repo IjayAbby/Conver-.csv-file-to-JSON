@@ -1,4 +1,5 @@
 const csvtojson = require('csvtojson');
+const fs = require ('fs');
 
 class Customer {
     constructor(name, dob, phone, id_num, country_id, site_code) {
@@ -11,11 +12,11 @@ class Customer {
     }
 }
 
-async function parseCustomer(row) {
+async function parseCustomer(row, lineNumber) {
     try {
         let name = row.Name;
         if (!name) {
-            return {error: "Name is empty", line: row};
+            return {error: "Name is empty", line: lineNumber};
         }
         
         let dob = new Date(row.DoB);
@@ -30,16 +31,16 @@ async function parseCustomer(row) {
         
         let country_id = parseInt(row.CountryID);
         if (![1, 2, 3].includes(country_id)) {
-            return {error: "Country ID is not valid", line: row};
+            return {error: "Country ID is not valid", line: lineNumber};
         }
         
         let site_code = parseInt(row.SiteCode);
         if (country_id === 1 && ![235, 657, 887].includes(site_code)) {
-            return {error: `Site code ${site_code} does not exist in Kenya.`, line: row};
+            return {error: `Site code ${site_code} does not exist in Kenya.`, line: lineNumber};
         } else if (country_id === 2 && ![772, 855].includes(site_code)) {
-            return {error: `Site code ${site_code} does not exist in Sierra Leone.`, line: row};
+            return {error: `Site code ${site_code} does not exist in Sierra Leone.`, line: lineNumber};
         } else if (country_id === 3 && ![465, 811, 980].includes(site_code)) {
-            return {error: `Site code ${site_code} does not exist in Nigeria.`, line: row};
+            return {error: `Site code ${site_code} does not exist in Nigeria.`, line: lineNumber};
         }
         
         const customer = await new Customer(
@@ -52,16 +53,13 @@ async function parseCustomer(row) {
         );
         return customer;
     } catch (e) {
-        return {error: e.toString(), line: row};
+        return {error: e.toString(), line: lineNumber};
     }
 }
 
-async function parseCSV(file) {
-    let result = [];
-    let rows = await csvtojson().fromFile(file);
-    rows.forEach(row => {
-        result.push(parseCustomer(row));
-    });
+async function parseCSV(app) {
+    let rows = await csvtojson().fromFile(app);
+    let result = await Promise.all(rows.map((row, index) => parseCustomer(row, index + 1)));
     return result;
 }
 
