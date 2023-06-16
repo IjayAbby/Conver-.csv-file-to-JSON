@@ -3,23 +3,24 @@ const { Customer, parseCustomer } = require('./app');
 describe('parseCustomer', () => {
   it('should parse a valid customer row', async () => {
     const row = {
-      Name: "Simon Kamau",
-      DoB: "1963-08-15",
-      Phone: "254705611231",
-      NationalID: "13424422",
-      CountryID: 1,
-      SiteCode: 235
+        Name: "Simon Kamau",
+        DoB: "1963-08-15",
+        Phone: "254705611231",
+        NationalID: "13424422",
+        CountryID: 1,
+        SiteCode: 235
     };
 
+    let dob = new Date(row.DoB);
+    let formattedDob = dob.toISOString().slice(0, 10); 
     const customer = await parseCustomer(row);
-
     expect(customer).toEqual(new Customer(
-      'Simon Kamau',
-      new Date('1963-08-15'),
-      '254705611231',
-      '13424422',
-      1,
-      235
+        'Simon Kamau',
+        (formattedDob),
+        '254705611231',
+        '13424422',
+        1,
+        235
     ));
   });
 
