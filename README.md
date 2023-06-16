@@ -1,6 +1,7 @@
 # How to convert CSV to JSON in Node.js
+- CSV (Comma-Separated Values) is a popular data exchange format that stores data in a tabular format where each row consists of one or more fields and each column represents a specific field. Due to simplicity and better integration with existing applications, CSV is widely used for exporting and importing large data sets.
 
-Write a program that takes a CSV file as input, and returns either a Customer record or an error for each row. 
+- This project takes a CSV file as input and returns either a Customer record or an error for each row. 
 A customer record has the following fields:
 ```
 Name: string
