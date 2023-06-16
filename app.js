@@ -1,4 +1,3 @@
-const fs = require('fs');
 const csvtojson = require('csvtojson');
 
 class Customer {
@@ -12,7 +11,7 @@ class Customer {
     }
 }
 
-function parseCustomer(row) {
+async function parseCustomer(row) {
     try {
         let name = row.Name;
         if (!name) {
@@ -20,10 +19,11 @@ function parseCustomer(row) {
         }
         
         let dob = new Date(row.DoB);
+        let formattedDob = dob.toISOString().slice(0, 10);
         
         let phone = row.Phone.replace("+", "");
-        if (!/^\d+$/.test(phone)) {
-            return {error: "Phone number is not valid", line: row};
+        if (isNaN(row.Phone)) {
+            throw new Error('Phone number is not valid');
         }
         
         let id_num = row.NationalID;
@@ -42,7 +42,15 @@ function parseCustomer(row) {
             return {error: `Site code ${site_code} does not exist in Nigeria.`, line: row};
         }
         
-        return new Customer(name, dob, phone, id_num, country_id, site_code);
+        const customer = await new Customer(
+            row.Name,
+            formattedDob,
+            phone,
+            row.NationalID,
+            row.CountryID,
+            row.SiteCode
+        );
+        return customer;
     } catch (e) {
         return {error: e.toString(), line: row};
     }
@@ -63,3 +71,4 @@ async function main() {
 }
 
 main();
+module.exports = { parseCustomer, Customer }
